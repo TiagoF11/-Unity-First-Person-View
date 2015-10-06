@@ -48,3 +48,6 @@ As of now, the only limitations of this system are:
 * Forward Rendering currently not working
 
 
+
+Check the forums for feedback and questions:
+http://forum.unity3d.com/threads/free-first-person-view-no-clipping-environment-shadow-support-and-independent-fov.356711/
