@@ -20,7 +20,7 @@ namespace FirstPersonView
                 _render.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
             }
         }
-
+         
         /// <summary>
         /// Disable First Person Viewer.
         /// Change back to shadowCastingMode.On

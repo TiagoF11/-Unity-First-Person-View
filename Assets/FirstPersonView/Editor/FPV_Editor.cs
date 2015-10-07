@@ -13,16 +13,29 @@ namespace FirstPersonView.Editor
         private static void CreateFPVCamera()
         {
             //Set Parent Camera
-            Camera worldCamera = new GameObject("MainCamera").AddComponent<Camera>();
+            GameObject worldCam = new GameObject("MainCamera");
+            
+            Undo.RegisterCreatedObjectUndo(worldCam, "Created World Camera");
+
+            worldCam.AddComponent<Camera>();
+
+            Camera worldCamera = worldCam.GetComponent<Camera>();
 
             worldCamera.gameObject.AddComponent<AudioListener>();
             worldCamera.gameObject.AddComponent<GUILayer>();
             worldCamera.gameObject.AddComponent<FlareLayer>();
 
-            worldCamera.nearClipPlane = 0.1f;
-            worldCamera.cullingMask = ~(1 << FPV_Container.FIRSTPERSONRENDERLAYER);
-            worldCamera.hdr = true;
+            Undo.AddComponent<FPV_WorldCamera>(worldCamera.gameObject);
 
+            Undo.RecordObject(worldCamera, "Near Clip Plane change");
+            worldCamera.nearClipPlane = 0.1f;
+
+            Undo.RecordObject(worldCamera, "Modify culling mask");
+            worldCamera.cullingMask = ~(1 << FPV_Container.FIRSTPERSONRENDERLAYER);
+
+            Undo.RecordObject(worldCamera, "set HDR");
+            worldCamera.hdr = true;
+            
             CreateFPVCamera(worldCamera);
 
             Selection.activeTransform = worldCamera.transform;
@@ -50,13 +63,25 @@ namespace FirstPersonView.Editor
                 return;
             }
 
+            Undo.AddComponent<AudioListener>(worldCamera.gameObject);
+            Undo.AddComponent<GUILayer>(worldCamera.gameObject);
+            Undo.AddComponent<FlareLayer>(worldCamera.gameObject);
+
+            Undo.AddComponent<FPV_WorldCamera>(worldCamera.gameObject);
+            /*
             worldCamera.gameObject.AddComponent<AudioListener>();
             worldCamera.gameObject.AddComponent<GUILayer>();
             worldCamera.gameObject.AddComponent<FlareLayer>();
-
+            */
+            Undo.RecordObject(worldCamera, "Modify near clip plane");
             worldCamera.nearClipPlane = 0.1f;
+
+            Undo.RecordObject(worldCamera, "Modify culling mask");
             worldCamera.cullingMask = ~(1 << FPV_Container.FIRSTPERSONRENDERLAYER);
+
+            Undo.RecordObject(worldCamera, "set HDR");
             worldCamera.hdr = true;
+
             CreateFPVCamera(worldCamera);
 
             Debug.LogFormat("FPV: Set the Camera: '{0}' as FPV ready Camera.", worldCamera.name);
@@ -70,54 +95,86 @@ namespace FirstPersonView.Editor
         private static Camera CreateFPVCamera(Camera parentCamera)
         {
             //Instantiate FPV Camera
-            Camera fpvCamera = new GameObject("FPV_Camera").AddComponent<Camera>();
+            GameObject fpvcam = new GameObject("FPV_Camera");
+
+            Undo.RegisterCreatedObjectUndo(fpvcam, "Created fpv Camera");
+
+            fpvcam.AddComponent<Camera>();
+
+            Camera fpvCamera = fpvcam.GetComponent<Camera>();
 
             //Set parent and local transform
-            fpvCamera.transform.SetParent(parentCamera.transform);
+            Undo.SetTransformParent(fpvCamera.transform, parentCamera.transform, "new parent set");
+
+            Undo.RecordObject(fpvCamera, "Change local position to Zero");
             fpvCamera.transform.localPosition = Vector3.zero;
+            Undo.RecordObject(fpvCamera, "Change local rotation to identity");
             fpvCamera.transform.localRotation = Quaternion.identity;
 
-            fpvCamera.gameObject.AddComponent<AudioListener>();
-            fpvCamera.gameObject.AddComponent<FPV_FirstPersonCamera>();
+            Undo.AddComponent<AudioListener>(fpvCamera.gameObject);
+            Undo.AddComponent<FPV_FirstPersonCamera>(fpvCamera.gameObject);
 
             //Set name and layer
+            Undo.RecordObject(fpvCamera, "Set Tag");
             fpvCamera.tag = "FirstPersonCamera";
+            Undo.RecordObject(fpvCamera, "Set Layer");
             fpvCamera.gameObject.layer = FPV_Container.FIRSTPERSONRENDERLAYER;
 
             //Set camera properties
+            Undo.RecordObject(fpvCamera, "Set near clip plane");
             fpvCamera.nearClipPlane = 0.01f;
+            Undo.RecordObject(fpvCamera, "set far clip plane");
             fpvCamera.farClipPlane = 2;
+            Undo.RecordObject(fpvCamera, "set depth");
             fpvCamera.depth = parentCamera.depth + 1;
+            Undo.RecordObject(fpvCamera, "set clear flags");
             fpvCamera.clearFlags = CameraClearFlags.Depth;
-            fpvCamera.cullingMask = ~ ( 1 << FPV_Container.FIRSTPERSONRENDERLAYER );
+            Undo.RecordObject(fpvCamera, "set hdr");
             fpvCamera.hdr = parentCamera.hdr;
+            Undo.RecordObject(fpvCamera, "set rendering path");
             fpvCamera.renderingPath = parentCamera.renderingPath;
 
 
             //Instantiate Image Effects Camera
-            Camera fpv_imageEffects = new GameObject("FPV_ImageEffects").AddComponent<Camera>();
+            GameObject fpv_imageEff = new GameObject("FPV_FinalCamera");
+
+            Undo.RegisterCreatedObjectUndo(fpv_imageEff, "Created image effects Camera");
+
+            Undo.AddComponent<Camera>(fpv_imageEff.gameObject);
+
+            Camera fpv_imageEffects = fpv_imageEff.GetComponent<Camera>();
 
             //Set parent and local transform
-            fpv_imageEffects.transform.SetParent(fpvCamera.transform);
+            Undo.SetTransformParent(fpv_imageEffects.transform, fpvCamera.transform, "new parent set");
+            Undo.RecordObject(fpvCamera, "Change local position to Zero");
             fpv_imageEffects.transform.localPosition = Vector3.zero;
+            Undo.RecordObject(fpvCamera, "Change local rotation to identity");
             fpv_imageEffects.transform.localRotation = Quaternion.identity;
 
-            fpv_imageEffects.gameObject.AddComponent<FPV_ImageEffects>();
-            fpv_imageEffects.gameObject.GetComponent<FPV_ImageEffects>().FPVCamera = fpvCamera;
-            fpv_imageEffects.gameObject.GetComponent<FPV_ImageEffects>().WorldCamera = parentCamera;
+
+            Undo.AddComponent<FPV_FinalCamera>(fpv_imageEffects.gameObject);
 
 
             //Set name and layer
+            Undo.RecordObject(fpv_imageEffects, "set hdr");
             fpv_imageEffects.tag = "FirstPersonCamera";
+            Undo.RecordObject(fpv_imageEffects, "set hdr");
             fpv_imageEffects.gameObject.layer = FPV_Container.FIRSTPERSONRENDERLAYER;
 
             //Set camera properties
+            Undo.RecordObject(fpv_imageEffects, "set near clip plane");
             fpv_imageEffects.nearClipPlane = 1f;
+            Undo.RecordObject(fpv_imageEffects, "set far clip plane");
             fpv_imageEffects.farClipPlane = 2;
+            Undo.RecordObject(fpv_imageEffects, "set septh");
             fpv_imageEffects.depth = fpv_imageEffects.depth + 1;
+            Undo.RecordObject(fpv_imageEffects, "set clear flags");
             fpv_imageEffects.clearFlags = CameraClearFlags.Nothing;
+            Undo.RecordObject(fpv_imageEffects, "set culling mask");
             fpv_imageEffects.cullingMask = 0;
+            Undo.RecordObject(fpv_imageEffects, "set hdr");
             fpv_imageEffects.hdr = parentCamera.hdr;
+            Undo.RecordObject(fpv_imageEffects, "set rendering path");
             fpv_imageEffects.renderingPath = parentCamera.renderingPath;
 
             return fpvCamera;
@@ -136,7 +193,7 @@ namespace FirstPersonView.Editor
                 return;
             }
 
-            Selection.activeGameObject.AddComponent<FPV_Object>();
+            Undo.AddComponent<FPV_Object>(Selection.activeGameObject);
 
             Debug.LogFormat("FPV: Set the Object: '{0}' as FPV Object (Shadow)", Selection.activeGameObject.name);
         }
@@ -153,7 +210,7 @@ namespace FirstPersonView.Editor
                 return;
             }
 
-            Selection.activeGameObject.AddComponent<FPV_Object_DisableOnly>();
+            Undo.AddComponent<FPV_Object_DisableOnly>(Selection.activeGameObject);
 
             Debug.LogFormat("FPV: Set the Object: '{0}' as FPV Object (No Shadow/Disable Only)", Selection.activeGameObject.name);
         }

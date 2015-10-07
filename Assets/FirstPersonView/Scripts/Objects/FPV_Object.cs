@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -36,6 +37,13 @@ namespace FirstPersonView
         /// This variable is used to cut down the amount of checks the method needs to do (1 check vs 3 checks for every object).
         /// </summary>
         protected bool _canEnableFPV;
+
+
+        // ----- Public Variables -----
+        /// <summary>
+        /// Should this FPV_Object render shadows on the world camera.
+        /// </summary>
+        public bool worldShadowsWhileInFPV;
 
         void Awake()
         {
@@ -162,8 +170,8 @@ namespace FirstPersonView
                 _isVisible = false;
             }
         }
-
-
+         
+         
         // ----- LAYERS -----
 
         /// <summary>
@@ -233,7 +241,7 @@ namespace FirstPersonView
         void OnDisable()
         {
             _isEnabled = false;
-            SetFPVEnabled();
+            SetFPVEnabled(); 
         }
 
         /// <summary>
@@ -242,6 +250,15 @@ namespace FirstPersonView
         protected virtual void OnDestroy()
         {
             FPV_Container.RemoveGenericFPO(this);
+        }
+
+        /// <summary>
+        /// Remove a renderer from the list of renderers of this object.
+        /// </summary>
+        /// <param name="renderer"></param>
+        public void RemoveRenderer(IFPV_Renderer renderer)
+        {
+            _renderers.Remove(renderer);
         }
     }
 }

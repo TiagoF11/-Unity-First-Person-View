@@ -5,16 +5,31 @@ namespace FirstPersonView
     public class FPV_FirstPersonCamera : MonoBehaviour
     {
         /// <summary>
-        /// Static variable of the FPV Camera.
+        /// Camera component of this camera
         /// </summary>
-        public static Camera fpvCamera;
-
-        private RenderBuffer activeRT;
-        private Camera cam;
+        private Camera fpvCamera;
 
         void Awake()
         {
-            fpvCamera = cam = GetComponent<Camera>();
+            UpdateStaticCamera();
+            fpvCamera = GetComponent<Camera>();
+        }
+
+        /// <summary>
+        /// Manualy update the static first person view camera variable.
+        /// </summary>
+        public void UpdateStaticCamera()
+        {
+            FPV.firstPersonCamera = this;
+        }
+
+        /// <summary>
+        /// Get the camera component of this camera.
+        /// </summary>
+        /// <returns></returns>
+        public Camera GetCamera()
+        {
+            return fpvCamera;
         }
 
         /// <summary>
@@ -44,11 +59,6 @@ namespace FirstPersonView
         {
             FPV_Container.DisableFirstPersonViewer();
             FPV_Renderer_Base.isFPVCameraRendering = false;
-        }
-
-        public Camera GetCamera()
-        {
-            return cam;
         }
     }
 }

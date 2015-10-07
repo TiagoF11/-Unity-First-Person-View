@@ -77,6 +77,12 @@ namespace FirstPersonView
 
         // ----- Unity Callbacks -----
 
+        void OnDestroy()
+        {
+            //This might be costly if this FPV_Object has too many renderers. Should be fine for small number of renderers
+            _parent.RemoveRenderer(this);
+        }
+
         /// <summary>
         /// Called when a camera is going to render this object.
         /// This reduces the amount of work done for the FPV Camera, since only objects inside its frustum will be called (or casts shadows inside the camera's frustum)

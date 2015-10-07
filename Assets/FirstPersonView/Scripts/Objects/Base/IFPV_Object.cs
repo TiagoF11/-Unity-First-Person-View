@@ -34,5 +34,11 @@
         /// This is set by its children.
         /// </summary>
         void SetVisible();
+
+        /// <summary>
+        /// Remove a renderer from the list of renderers of this object.
+        /// </summary>
+        /// <param name="renderer"></param>
+        void RemoveRenderer(IFPV_Renderer renderer);
     }
 }
