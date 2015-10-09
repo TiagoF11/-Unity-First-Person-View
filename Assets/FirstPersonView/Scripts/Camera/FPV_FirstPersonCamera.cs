@@ -2,36 +2,22 @@
 
 namespace FirstPersonView
 {
-    public class FPV_FirstPersonCamera : MonoBehaviour
+    public class FPV_FirstPersonCamera : FPV_Camera
     {
-        /// <summary>
-        /// Camera component of this camera
-        /// </summary>
-        private Camera fpvCamera;
-
         void Awake()
         {
+            SetCamera();
             UpdateStaticCamera();
-            fpvCamera = GetComponent<Camera>();
         }
 
         /// <summary>
         /// Manualy update the static first person view camera variable.
         /// </summary>
-        public void UpdateStaticCamera()
+        public override void UpdateStaticCamera()
         {
             FPV.firstPersonCamera = this;
         }
-
-        /// <summary>
-        /// Get the camera component of this camera.
-        /// </summary>
-        /// <returns></returns>
-        public Camera GetCamera()
-        {
-            return fpvCamera;
-        }
-
+        
         /// <summary>
         /// Pre Cull Method.
         /// This is called for objects which need to be disabled before rendering.

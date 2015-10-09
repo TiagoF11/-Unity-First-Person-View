@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.1.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -151,6 +153,8 @@
     <Compile Include="Assets\FirstPersonView\Example\Standard Assets\Utility\TimedObjectDestructor.cs" />
     <Compile Include="Assets\FirstPersonView\Example\Standard Assets\Utility\WaypointCircuit.cs" />
     <Compile Include="Assets\FirstPersonView\Example\Standard Assets\Utility\WaypointProgressTracker.cs" />
+    <Compile Include="Assets\FirstPersonView\Scripts\Camera\Base\FPV_Camera.cs" />
+    <Compile Include="Assets\FirstPersonView\Scripts\Camera\Base\IFPV_Camera.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\Camera\FPV_FinalCamera.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\Camera\FPV_FirstPersonCamera.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\Camera\FPV_WorldCamera.cs" />

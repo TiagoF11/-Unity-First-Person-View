@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace FirstPersonView
 {
-    public class FPV_FinalCamera : MonoBehaviour
+    public class FPV_FinalCamera : FPV_Camera
     {
         /// <summary>
         /// Camera component of the WorldCamera
@@ -36,7 +32,7 @@ namespace FirstPersonView
 
         void Awake()
         {
-            worldCamera = GetComponent<Camera>();
+            SetCamera();
             UpdateStaticCamera();
         }
 
@@ -56,9 +52,9 @@ namespace FirstPersonView
         }
 
         /// <summary>
-        /// Manualy update the static world camera variable.
+        /// Manualy update the static camera variable of this component.
         /// </summary>
-        public void UpdateStaticCamera()
+        public override void UpdateStaticCamera()
         {
             FPV.finalCamera = this;
         }
@@ -84,7 +80,7 @@ namespace FirstPersonView
             if (HasResolutionChanged())
             {
                 CreateRenderTexture();
-            }
+            } 
         }
 
         /// <summary>
