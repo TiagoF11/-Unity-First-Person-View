@@ -31,7 +31,7 @@ namespace FirstPersonView
         /// </summary>
         protected bool _isFirstPersonObject;
         /// <summary>
-        /// 
+        /// Was this renderer affected by the FirstPersonCamera
         /// </summary>
         protected bool _rendererChanged = false;
 
@@ -49,16 +49,18 @@ namespace FirstPersonView
             _isFirstPersonObject = false;
         }
 
+        /// <summary>
+        /// Enable First Person Viewer.
+        /// </summary>
         public abstract void EnableFirstPersonViewer();
 
         /// <summary>
         /// Disable First Person Viewer.
-        /// Change back to shadowCastingMode.On
         /// </summary>
         public abstract void DisableFirstPersonViewer();
 
         /// <summary>
-        /// Set this renderer's layer as First Person Object
+        /// Set this renderer's layer as First Person Object and set the flag isFirstPersonObject to TRUE
         /// </summary>
         public void SetAsFirstPersonObject()
         {
@@ -66,7 +68,7 @@ namespace FirstPersonView
             _render.gameObject.layer = FPV.FIRSTPERSONRENDERLAYER;
         }
         /// <summary>
-        /// Remove this renderer's layer from First Person Object to a world object.
+        /// Remove this renderer's layer from First Person Object to a world object and set the flag isFirstPersonObject to FALSE
         /// </summary>
         public void RemoveAsFirstPersonObject()
         {

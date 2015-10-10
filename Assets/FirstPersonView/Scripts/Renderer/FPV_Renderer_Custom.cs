@@ -45,11 +45,12 @@ namespace FirstPersonView
         {
             rendererShadowCastMode = mode;
         }
-        /// <summary>
-        /// Called when a camera is going to render this object.
-        /// This reduces the amount of work done for the FPV Camera, since only objects inside its frustum will be called (or casts shadows inside the camera's frustum)
-        /// </summary>
 
+        /// <summary>
+        /// Before this object is going to be rendered, it will check it is not a first person object.
+        /// It will then see if the First Person camera is currently rendering, and will then enable the First Person View for this renderer.
+        /// If not, it will revert the renrerer back to its original state.
+        /// </summary>
         protected void OnWillRenderObject()
         {
             if (_isFirstPersonObject) return;

@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.1.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -160,13 +162,11 @@
     <Compile Include="Assets\FirstPersonView\Scripts\Objects\FPV_Object.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\Objects\FPV_Object_Custom.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\Objects\FPV_Object_DisableOnly.cs" />
-    <Compile Include="Assets\FirstPersonView\Scripts\Objects\FPV_Object_Terrain.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\Renderer\Base\FPV_Renderer_Base.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\Renderer\Base\IFPV_Renderer.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\Renderer\FPV_Renderer.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\Renderer\FPV_Renderer_Custom.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\Renderer\FPV_Renderer_DisableOnly.cs" />
-    <Compile Include="Assets\FirstPersonView\Scripts\Renderer\FPV_Renderer_Terrain.cs" />
     <Compile Include="Assets\FirstPersonView\Scripts\_Static\FPV.cs" />
   </ItemGroup>
   <ItemGroup>

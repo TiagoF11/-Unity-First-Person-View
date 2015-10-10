@@ -18,7 +18,12 @@ namespace FirstPersonView
                 AddRenderer(render, trans.gameObject.AddComponent<FPV_Renderer_DisableOnly>());
             }
         }
-        
+
+        /// <summary>
+        /// check if a renderer inside was changed by the FPV. 
+        /// If it was, it means that the renderers were disabled for the First Person View, so in this Update, 
+        /// the method will re-enable the renderers so they are active when the World Camera is going to render.
+        /// </summary>
         void Update()
         {
             if(_rendererChanged)
