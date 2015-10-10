@@ -13,12 +13,13 @@ namespace FirstPersonView
         /// <param name="render"></param>
         void Setup(Renderer render, IFPV_Object parent);
 
-        /// <summary>
-        /// Enable First Person Viewer
         /// </summary>
-        void EnableFirstPersonViewer();
+        /// 
         /// <summary>
-        /// Disable First Person Viewer
+        void EnableFirstPersonViewer();
+
+        /// <summary>
+        /// Disable first Person Viewer.
         /// </summary>
         void DisableFirstPersonViewer();
 
@@ -26,15 +27,10 @@ namespace FirstPersonView
         /// Set this renderer as First Person Object
         /// </summary>
         void SetAsFirstPersonObject();
+
         /// <summary>
         /// Set this renderer as First Person Object
         /// </summary>
         void RemoveAsFirstPersonObject();
-
-        /// <summary>
-        /// Is this renderer visible.
-        /// </summary>
-        /// <returns></returns>
-        bool IsVisible();
     }
 }

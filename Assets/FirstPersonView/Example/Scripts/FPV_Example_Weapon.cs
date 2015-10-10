@@ -32,7 +32,7 @@ namespace FirstPersonViewer.Example
 
             isOnPlayer = true;
 
-            fpvObject.SetAsFirstPersonObject();
+            fpvObject.EnableAsFirstPersonObject();
         }
 
         public void SetWeaponOnWorld()
@@ -44,7 +44,7 @@ namespace FirstPersonViewer.Example
 
             isOnPlayer = false;
 
-            fpvObject.RemoveAsFirstPersonObject();
+            fpvObject.DisableAsFirstPersonObject();
         }
 
         public bool IsOnPlayer()

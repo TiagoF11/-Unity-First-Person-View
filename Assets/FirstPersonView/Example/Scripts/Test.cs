@@ -7,6 +7,6 @@ public class Test : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<IFPV_Object>().SetAsFirstPersonObject();
+        GetComponent<IFPV_Object>().EnableAsFirstPersonObject();
 	}
 }

@@ -31,7 +31,7 @@ namespace FirstPersonView.Editor
             worldCamera.nearClipPlane = 0.1f;
 
             Undo.RecordObject(worldCamera, "Modify culling mask");
-            worldCamera.cullingMask = ~(1 << FPV_Container.FIRSTPERSONRENDERLAYER);
+            worldCamera.cullingMask = ~(1 << FPV.FIRSTPERSONRENDERLAYER);
 
             Undo.RecordObject(worldCamera, "set HDR");
             worldCamera.hdr = true;
@@ -77,7 +77,7 @@ namespace FirstPersonView.Editor
             worldCamera.nearClipPlane = 0.1f;
 
             Undo.RecordObject(worldCamera, "Modify culling mask");
-            worldCamera.cullingMask = ~(1 << FPV_Container.FIRSTPERSONRENDERLAYER);
+            worldCamera.cullingMask = ~(1 << FPV.FIRSTPERSONRENDERLAYER);
 
             Undo.RecordObject(worldCamera, "set HDR");
             worldCamera.hdr = true;
@@ -118,7 +118,7 @@ namespace FirstPersonView.Editor
             Undo.RecordObject(fpvCamera, "Set Tag");
             fpvCamera.tag = "FirstPersonCamera";
             Undo.RecordObject(fpvCamera, "Set Layer");
-            fpvCamera.gameObject.layer = FPV_Container.FIRSTPERSONRENDERLAYER;
+            fpvCamera.gameObject.layer = FPV.FIRSTPERSONRENDERLAYER;
 
             //Set camera properties
             Undo.RecordObject(fpvCamera, "Set near clip plane");
@@ -159,7 +159,7 @@ namespace FirstPersonView.Editor
             Undo.RecordObject(fpv_imageEffects, "set hdr");
             fpv_imageEffects.tag = "FirstPersonCamera";
             Undo.RecordObject(fpv_imageEffects, "set hdr");
-            fpv_imageEffects.gameObject.layer = FPV_Container.FIRSTPERSONRENDERLAYER;
+            fpv_imageEffects.gameObject.layer = FPV.FIRSTPERSONRENDERLAYER;
 
             //Set camera properties
             Undo.RecordObject(fpv_imageEffects, "set near clip plane");

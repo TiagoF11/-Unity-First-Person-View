@@ -18,21 +18,19 @@ namespace FirstPersonView
                 AddRenderer(render, trans.gameObject.AddComponent<FPV_Renderer_DisableOnly>());
             }
         }
-
-        /// <summary>
-        /// Add this object to the DisableOnlyFPO container
-        /// </summary>
-        protected override void AddToContainer()
+        
+        void Update()
         {
-            FPV_Container.AddDisableOnlyFPO(this);
+            if(_rendererChanged)
+            {
+                _rendererChanged = false;
+                //On beggining of the frame, re-enable all objects that were disabled for the First Person View.
+                for (int i = 0; i < _renderers.Count; i++)
+                {
+                    _renderers[i].DisableFirstPersonViewer();
+                }
+            }
         }
-
-        /// <summary>
-        /// Remove this object from the DisableOnlyFPO container
-        /// </summary>
-        protected override void OnDestroy()
-        {
-            FPV_Container.RemoveDisableOnlyFPO(this);
-        }
+        
     }
 }

@@ -12,16 +12,9 @@ namespace FirstPersonView
     /// </summary>
     public class FPV_Renderer_DisableOnly : FPV_Renderer_Base
     {
-        /// <summary>
-        /// store if the first person viewer was enabled.
-        /// This is needed because we disable the renderer when enabling first person viewer.
-        /// </summary>
-        private bool viewChanged;
-
         public override void Setup(Renderer render, IFPV_Object parent)
         {
             base.Setup(render, parent);
-            viewChanged = false;
         }
 
         /// <summary>
@@ -29,11 +22,7 @@ namespace FirstPersonView
         /// </summary>
         public override void EnableFirstPersonViewer()
         {
-            if (isVisible)
-            {
-                viewChanged = true;
-                _render.enabled = false;
-            }
+            _render.enabled = false;
         }
 
         /// <summary>
@@ -41,11 +30,19 @@ namespace FirstPersonView
         /// </summary>
         public override void DisableFirstPersonViewer()
         {
-            if (viewChanged)
+            _render.enabled = true;
+        }
+        
+        void OnRenderObject()
+        {
+            if (_isFirstPersonObject) return;
+
+            if (!isFPVCameraRendering)
             {
-                viewChanged = false;
-                _render.enabled = true;
+                _parent.SetChanged();
+                EnableFirstPersonViewer();
             }
         }
+        
     }
 }

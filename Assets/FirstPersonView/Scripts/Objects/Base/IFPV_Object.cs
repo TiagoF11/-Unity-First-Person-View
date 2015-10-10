@@ -5,23 +5,15 @@
     /// </summary>
     public interface IFPV_Object
     {
-        /// <summary>
-        /// Enable First Person Render. OnPreRender()
-        /// </summary>
-        void EnableFirstPersonViewer();
-        /// <summary>
-        /// Disable First Person Render. OnPostRender()
-        /// </summary>
-        void DisableFirstPersonViewer();
 
         /// <summary>
         /// Set this and all objects inside as First Person Object objects.
         /// </summary>
-        void SetAsFirstPersonObject();
+        void EnableAsFirstPersonObject();
         /// <summary>
         /// Remove this and all objects inside as First Person Object objects.
         /// </summary>
-        void RemoveAsFirstPersonObject();
+        void DisableAsFirstPersonObject();
 
         /// <summary>
         /// Is this object a First Person type object.
@@ -30,10 +22,10 @@
         bool IsFirstPersonObject();
 
         /// <summary>
-        /// Set this object as visible from the FPV Camera.
-        /// This is set by its children.
+        /// Set that a renderer in this object has changed.
+        /// This is used for FPV_Object_Disable objects in Update function.
         /// </summary>
-        void SetVisible();
+        void SetChanged();
 
         /// <summary>
         /// Remove a renderer from the list of renderers of this object.

@@ -25,16 +25,6 @@ namespace FirstPersonView
         void OnPreCull()
         {
             FPV_Renderer_Base.isFPVCameraRendering = true;
-            FPV_Container.EnableDisableOnlyFirstPersonViewer();
-        }
-
-        /// <summary>
-        /// On Pre Render.
-        /// Called for objects that get their ShadowCasterMode changed.
-        /// </summary>
-        void OnPreRender()
-        {
-            FPV_Container.EnableFirstPersonViewer();
         }
 
         /// <summary>
@@ -43,7 +33,6 @@ namespace FirstPersonView
         /// </summary>
         void OnPostRender()
         {
-            FPV_Container.DisableFirstPersonViewer();
             FPV_Renderer_Base.isFPVCameraRendering = false;
         }
     }

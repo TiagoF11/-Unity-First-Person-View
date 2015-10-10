@@ -11,7 +11,6 @@ namespace FirstPersonView
     /// </summary>
     public class FPV_Renderer_Terrain : FPV_Renderer_DisableOnly
     {
-        private bool viewChanged;
         private Terrain terrain;
 
         public override void Setup(Renderer render, IFPV_Object parent)
@@ -20,8 +19,6 @@ namespace FirstPersonView
             _parent = parent;
             _render = render;
             _originalLayer = gameObject.layer;
-            isVisible = true;
-            viewChanged = false;
         }
 
         /// <summary>
@@ -29,11 +26,7 @@ namespace FirstPersonView
         /// </summary>
         public override void EnableFirstPersonViewer()
         {
-            if (isVisible)
-            {
-                viewChanged = true;
-                terrain.enabled = false;
-            }
+            terrain.enabled = false;
         }
 
         /// <summary>
@@ -41,11 +34,7 @@ namespace FirstPersonView
         /// </summary>
         public override void DisableFirstPersonViewer()
         {
-            if (viewChanged)
-            {
-                viewChanged = false;
-                terrain.enabled = true;
-            }
+            terrain.enabled = true;
         }
     }
 }

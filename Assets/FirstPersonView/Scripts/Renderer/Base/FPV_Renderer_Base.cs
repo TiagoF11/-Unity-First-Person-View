@@ -26,9 +26,14 @@ namespace FirstPersonView
         /// </summary>
         protected Renderer _render;
         /// <summary>
-        /// Store if this object is visible
+        /// Is this renderer a first person object.
+        /// This is set by the parent FPV_Object
         /// </summary>
-        protected bool isVisible;
+        protected bool _isFirstPersonObject;
+        /// <summary>
+        /// 
+        /// </summary>
+        protected bool _rendererChanged = false;
 
         /// <summary>
         /// Setup method for this class
@@ -40,15 +45,15 @@ namespace FirstPersonView
             _parent = parent;
             _render = render;
             _originalLayer = render.gameObject.layer;
-            isVisible = true;
+            _rendererChanged = false;
+            _isFirstPersonObject = false;
         }
 
-        /// <summary>
-        /// Enable First Person Viewer
-        /// </summary>
         public abstract void EnableFirstPersonViewer();
+
         /// <summary>
-        /// Disable First Person Viewer
+        /// Disable First Person Viewer.
+        /// Change back to shadowCastingMode.On
         /// </summary>
         public abstract void DisableFirstPersonViewer();
 
@@ -57,22 +62,16 @@ namespace FirstPersonView
         /// </summary>
         public void SetAsFirstPersonObject()
         {
-            _render.gameObject.layer = FPV_Container.FIRSTPERSONRENDERLAYER;
+            _isFirstPersonObject = true;
+            _render.gameObject.layer = FPV.FIRSTPERSONRENDERLAYER;
         }
         /// <summary>
         /// Remove this renderer's layer from First Person Object to a world object.
         /// </summary>
         public void RemoveAsFirstPersonObject()
         {
+            _isFirstPersonObject = false;
             _render.gameObject.layer = _originalLayer;
-        }
-        /// <summary>
-        /// Is this object visible
-        /// </summary>
-        /// <returns></returns>
-        public bool IsVisible()
-        {
-            return isVisible;
         }
 
         // ----- Unity Callbacks -----
@@ -82,22 +81,6 @@ namespace FirstPersonView
             //This might be costly if this FPV_Object has too many renderers. Should be fine for small number of renderers
             _parent.RemoveRenderer(this);
         }
-
-        /// <summary>
-        /// Called when a camera is going to render this object.
-        /// This reduces the amount of work done for the FPV Camera, since only objects inside its frustum will be called (or casts shadows inside the camera's frustum)
-        /// </summary>
-        void OnWillRenderObject()
-        {
-            //Check if the actual camera rendering is the FPV Camera
-            if(isFPVCameraRendering)
-            {
-                //Set the variable as visible
-                isVisible = true;
-                //Tell the parent object that it will need to render renderers.
-                _parent.SetVisible();
-            }
-        }
-
+        
     }
 }

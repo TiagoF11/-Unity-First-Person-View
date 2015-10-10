@@ -8,14 +8,9 @@ namespace FirstPersonView
     public class FPV_Object : MonoBehaviour, IFPV_Object
     {
         /// <summary>
-        /// Is this object enabled.
-        /// </summary>
-        protected bool _isEnabled;
-
-        /// <summary>
         /// Is this object a First Person type object.
         /// </summary>
-        protected bool _isNotFirstPersonObject;
+        protected bool _isFirstPersonObject;
 
         /// <summary>
         /// Container of all renderers inside this object.
@@ -23,20 +18,9 @@ namespace FirstPersonView
         protected List<IFPV_Renderer> _renderers;
 
         /// <summary>
-        /// Was EnableFirstPersonRender successfull.
+        /// Checks if a renderer inside this object has been affected by the First Person View
         /// </summary>
-        protected bool _viewChanged;
-        
-        /// <summary>
-        /// Stores if the object is visible. this is set by the children
-        /// </summary>
-        protected bool _isVisible;
-
-        /// <summary>
-        /// This variable stores if this object can be enabled for First Person View.
-        /// This variable is used to cut down the amount of checks the method needs to do (1 check vs 3 checks for every object).
-        /// </summary>
-        protected bool _canEnableFPV;
+        protected bool _rendererChanged;
 
 
         // ----- Public Variables -----
@@ -55,9 +39,7 @@ namespace FirstPersonView
         /// </summary>
         protected virtual void Setup()
         {
-            _isEnabled = gameObject.activeInHierarchy;
-            _isNotFirstPersonObject = true;
-            AddToContainer();
+            _isFirstPersonObject = false;
             SetRenderers();
         }
 
@@ -126,61 +108,15 @@ namespace FirstPersonView
             renderer.Setup(render, this);
             _renderers.Add(renderer);
         }
-
-        /// <summary>
-        /// Add this object to the container.
-        /// </summary>
-        protected virtual void AddToContainer()
-        {
-            FPV_Container.AddGenericFPO(this);
-        }
-
-
-        // ----- RENDER -----
-
-        /// <summary>
-        /// Enable First Person Render.
-        /// Since this object is the parent, then all objects must share the same state as this (is FPV or not).
-        /// Better for performance, since we don't need to ask every renderer if it is in FPV mode.
-        /// </summary>
-        public virtual void EnableFirstPersonViewer()
-        {
-            if (_canEnableFPV)
-            {
-                _viewChanged = true;
-                for (int i = 0; i < _renderers.Count; i++)
-                {
-                    _renderers[i].EnableFirstPersonViewer();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Disable First Person Render
-        /// </summary>
-        public virtual void DisableFirstPersonViewer()
-        {
-            if (_viewChanged)
-            {
-                _viewChanged = false;
-                for (int i = 0; i < _renderers.Count; i++)
-                {
-                    _renderers[i].DisableFirstPersonViewer();
-                }
-                _isVisible = false;
-            }
-        }
-         
          
         // ----- LAYERS -----
 
         /// <summary>
         /// Set this and all objects inside as First Person Render objects.
         /// </summary>
-        public void SetAsFirstPersonObject()
+        public void EnableAsFirstPersonObject()
         {
-            _isNotFirstPersonObject = false;
-            SetFPVEnabled();
+            _isFirstPersonObject = true;
             for (int i = 0; i < _renderers.Count; i++)
             {
                 _renderers[i].SetAsFirstPersonObject();
@@ -190,10 +126,9 @@ namespace FirstPersonView
         /// <summary>
         /// Remove this and all objects inside from First Person Render objects.
         /// </summary>
-        public void RemoveAsFirstPersonObject()
+        public void DisableAsFirstPersonObject()
         {
-            _isNotFirstPersonObject = true;
-            SetFPVEnabled();
+            _isFirstPersonObject = false;
             for (int i = 0; i < _renderers.Count; i++)
             {
                 _renderers[i].RemoveAsFirstPersonObject();
@@ -206,50 +141,16 @@ namespace FirstPersonView
         /// <returns></returns>
         public bool IsFirstPersonObject()
         {
-            return !_isNotFirstPersonObject;
+            return _isFirstPersonObject;
         }
 
         /// <summary>
-        /// Set this object as visible from the FPV Camera.
-        /// This is set by its children.
+        /// Set that a renderer in this object has changed.
+        /// This is used for FPV_Object_Disable objects in Update function.
         /// </summary>
-        public void SetVisible()
+        public virtual void SetChanged()
         {
-            if(!_isVisible)
-            {
-                _isVisible = true;
-                SetFPVEnabled();
-            }
-        }
-
-        /// <summary>
-        /// Set if this object is FPV Enabled.
-        /// </summary>
-        private void SetFPVEnabled()
-        {
-            _canEnableFPV = _isVisible && _isEnabled && _isNotFirstPersonObject;
-        }
-
-        // ----- Unity Callbacks -----
-
-        void OnEnable()
-        {
-            _isEnabled = true;
-            SetFPVEnabled();
-        }
-
-        void OnDisable()
-        {
-            _isEnabled = false;
-            SetFPVEnabled(); 
-        }
-
-        /// <summary>
-        /// Always remove the object if it is destroyed
-        /// </summary>
-        protected virtual void OnDestroy()
-        {
-            FPV_Container.RemoveGenericFPO(this);
+            _rendererChanged = true;
         }
 
         /// <summary>
@@ -260,5 +161,6 @@ namespace FirstPersonView
         {
             _renderers.Remove(renderer);
         }
+        
     }
 }

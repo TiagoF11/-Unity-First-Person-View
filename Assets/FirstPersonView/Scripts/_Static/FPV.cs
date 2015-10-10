@@ -10,7 +10,12 @@ namespace FirstPersonView
         public static FPV_WorldCamera worldCamera { get; set; }
         public static FPV_FirstPersonCamera firstPersonCamera { get; set; }
         public static FPV_FinalCamera finalCamera { get; set; }
-        
+
+        /// <summary>
+        /// First Person Render Layer. This MUST be set in the Layer's settings.
+        /// </summary>
+        public static readonly int FIRSTPERSONRENDERLAYER = LayerMask.NameToLayer("FirstPersonView");
+
         /// <summary>
         /// Convert a First Person View point to World View point.
         /// </summary>
@@ -59,7 +64,7 @@ namespace FirstPersonView
         public static GameObject Instantiate(Object original, Vector3 position, Quaternion rotation)
         {
             GameObject result = Object.Instantiate(original, position, rotation) as GameObject;
-            FPV_Container.AddGenericFPO(result); //Add to container 
+            result.AddComponent<FPV_Object>();
             return result;
         }
 
@@ -73,7 +78,7 @@ namespace FirstPersonView
         public static GameObject InstantiateDisableOnlyFPO(Object original, Vector3 position, Quaternion rotation)
         {
             GameObject result = Object.Instantiate(original, position, rotation) as GameObject;
-            FPV_Container.AddDisableOnlyFPO(result); //Add to container 
+            result.AddComponent<FPV_Object_DisableOnly>();
             return result;
         }
 
