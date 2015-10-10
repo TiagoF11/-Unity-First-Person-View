@@ -121,6 +121,7 @@ namespace FirstPersonView
             {
                 _renderers[i].SetAsFirstPersonObject();
             }
+            _rendererChanged = false;
         }
 
         /// <summary>

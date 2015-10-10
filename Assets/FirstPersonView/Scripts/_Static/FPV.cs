@@ -23,7 +23,7 @@ namespace FirstPersonView
         /// <returns></returns>
         public static Vector3 FPVPointToWorldPoint(Vector3 point)
         {
-            point = firstPersonCamera.GetCamera().WorldToScreenPoint(point);
+            point = firstPersonCamera.GetCamera().WorldToScreenPoint(point); 
             return worldCamera.GetCamera().ScreenToWorldPoint(point);
         }
 

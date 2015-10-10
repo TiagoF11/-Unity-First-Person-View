@@ -66,6 +66,7 @@ namespace FirstPersonView
         {
             _isFirstPersonObject = true;
             _render.gameObject.layer = FPV.FIRSTPERSONRENDERLAYER;
+            DisableFirstPersonViewer();
         }
         /// <summary>
         /// Remove this renderer's layer from First Person Object to a world object and set the flag isFirstPersonObject to FALSE
